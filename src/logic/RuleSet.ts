@@ -16,41 +16,34 @@ export class RuleSet {
   }
 
   get symbol() {
-    return `{\n${this.rules.map(rule => `\t${rule.symbol}`).join('\n')}\n}`;
+    return `{\n${this.rules.map((rule) => `\t${rule.symbol}`).join("\n")}\n}`;
   }
 
-  addRule(rule:IfThenRule) {
+  addRule(rule: IfThenRule) {
     // Add to rule list.
     this.rules.push(rule);
 
     // Add to index
-    for(let P of rule.antecedent.predicateSymbols) {
-      if(!this.index[P])
-        this.index[P] = [rule];
-      else
-        this.index[P].push(rule);
+    for (let P of rule.antecedent.predicateSymbols) {
+      if (!this.index[P]) this.index[P] = [rule];
+      else this.index[P].push(rule);
     }
   }
 
-  addRules(...rules:IfThenRule[]) {
-    for(let rule of rules)
-      this.addRule(rule);
+  addRules(...rules: IfThenRule[]) {
+    for (let rule of rules) this.addRule(rule);
   }
 
-  *additionConsequences(
-    addition: TruthTable, 
-    onto: TruthTable
-  ) {
-    let releventRules:IfThenRule[] = [];
-    for(let P of addition.predicateSymbols) {
+  *additionConsequences(addition: TruthTable, onto: TruthTable) {
+    let releventRules: IfThenRule[] = [];
+    for (let P of addition.predicateSymbols) {
       let rules = this.index[P];
-      for(let rule of rules)
-        if(!releventRules.includes(rule))
-          releventRules.push(rule);
+      for (let rule of rules)
+        if (!releventRules.includes(rule)) releventRules.push(rule);
     }
 
-    for(let rule of releventRules)
-      for(let consequence of rule.additionConsequences(addition, onto))
+    for (let rule of releventRules)
+      for (let consequence of rule.additionConsequences(addition, onto))
         yield consequence;
   }
 }

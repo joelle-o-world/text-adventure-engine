@@ -1,8 +1,20 @@
-import {VariableTable, createVariable, Entity, Variable, createEntity} from '../logic'
-import {createNounPredicate, createAdjectivePredicate} from '../linking/';
-import {SimpleNounPhraseParse, NounPhraseParse} from '../grammar/parseTypings';
-import {findImperfectMappings, completePartialMapping} from '../logic/mapping';
-import {Context} from './Context';
+import {
+  VariableTable,
+  createVariable,
+  Entity,
+  Variable,
+  createEntity,
+} from "../logic";
+import { createNounPredicate, createAdjectivePredicate } from "../linking/";
+import {
+  SimpleNounPhraseParse,
+  NounPhraseParse,
+} from "../grammar/parseTypings";
+import {
+  findImperfectMappings,
+  completePartialMapping,
+} from "../logic/mapping";
+import { Context } from "./Context";
 
 /**
  *
@@ -22,52 +34,60 @@ export interface Interpretation {
 }
 
 /**
- * A function which takes a parse and 
+ * A function which takes a parse and
  */
-export type Interpreter<ParseType> = (parse:ParseType, ctx:Context) => Generator<Interpretation>;
+export type Interpreter<ParseType> = (
+  parse: ParseType,
+  ctx: Context
+) => Generator<Interpretation>;
 
-export function sequence<T>(...interpreters:Interpreter<T>[]): Interpreter<T> {
-  return function *(parse: T, ctx:Context) {
-    for(let interpreter of interpreters)
-      for(let interpretation of interpreter(parse, ctx))
-        yield interpretation;
+export function sequence<T>(...interpreters: Interpreter<T>[]): Interpreter<T> {
+  return function* (parse: T, ctx: Context) {
+    for (let interpreter of interpreters)
+      for (let interpretation of interpreter(parse, ctx)) yield interpretation;
   };
 }
 
-export function * contextFreeSNPInterpreter(parse:SimpleNounPhraseParse, ctx:Context): Generator<Interpretation>{
+export function* contextFreeSNPInterpreter(
+  parse: SimpleNounPhraseParse,
+  ctx: Context
+): Generator<Interpretation> {
   let newCtx = new Context(ctx);
   let present = newCtx.present;
-  
+
   let returns = createEntity();
 
   // Create the noun predicate
-  present.assign({predicate: createNounPredicate(parse.noun), args:[returns]}, 'T');
+  present.assign(
+    { predicate: createNounPredicate(parse.noun), args: [returns] },
+    "T"
+  );
 
   // Create the adjective predicates
-  for(let adj of parse.adjectives)
+  for (let adj of parse.adjectives)
     present.assign(
-      {predicate: createAdjectivePredicate(adj), args:[returns]},
-      'T',
+      { predicate: createAdjectivePredicate(adj), args: [returns] },
+      "T"
     );
 
-  yield {returns, ctx: newCtx};
+  yield { returns, ctx: newCtx };
 }
 
-export function * pureLogicalSNPInterpreter(parse: SimpleNounPhraseParse, ctx:Context): Generator<Interpretation> {
+export function* pureLogicalSNPInterpreter(
+  parse: SimpleNounPhraseParse,
+  ctx: Context
+): Generator<Interpretation> {
   let x = createVariable();
   let claim = new VariableTable();
 
   // Create the noun predicate
-  claim.assign({predicate: createNounPredicate(parse.noun), args:[x]}, 'T');
+  claim.assign({ predicate: createNounPredicate(parse.noun), args: [x] }, "T");
 
   // Create the adjective predicates
-  for(let adj of parse.adjectives)
-    claim.assign(
-      {predicate: createAdjectivePredicate(adj), args:[x]},
-      'T',
-    );
+  for (let adj of parse.adjectives)
+    claim.assign({ predicate: createAdjectivePredicate(adj), args: [x] }, "T");
 
-  for(let {mapping} of findImperfectMappings(claim, ctx.present)) {
+  for (let { mapping } of findImperfectMappings(claim, ctx.present)) {
     // Create a new context
     const newCtx = new Context(ctx);
     const completeMapping = completePartialMapping(mapping);
@@ -77,51 +97,39 @@ export function * pureLogicalSNPInterpreter(parse: SimpleNounPhraseParse, ctx:Co
 
     // Return value is always the first (and only) arg in the mapping.
     const [returns] = completeMapping;
-    newCtx.addMention( parse, returns );
+    newCtx.addMention(parse, returns);
 
-    yield {ctx: newCtx, returns};
+    yield { ctx: newCtx, returns };
   }
 }
 
-
-
-
-function variableInterpretation(
-  np: SimpleNounPhraseParse,
-) {
+function variableInterpretation(np: SimpleNounPhraseParse) {
   let x = createVariable();
   let claim = new VariableTable();
 
   // Create the noun predicate
-  claim.assign({predicate: createNounPredicate(np.noun), args:[x]}, 'T');
+  claim.assign({ predicate: createNounPredicate(np.noun), args: [x] }, "T");
 
   // Create the adjective predicates
-  for(let adj of np.adjectives)
-    claim.assign(
-      {predicate: createAdjectivePredicate(adj), args:[x]},
-      'T',
-    );
+  for (let adj of np.adjectives)
+    claim.assign({ predicate: createAdjectivePredicate(adj), args: [x] }, "T");
 
-  return {claim, x};
+  return { claim, x };
 }
 
-function *interpretSimpleNounPhrase(
+function* interpretSimpleNounPhrase(
   np: SimpleNounPhraseParse,
   ctx: Context
 ): Generator<Interpretation> {
-  let {claim, x} = variableInterpretation(np);
+  let { claim, x } = variableInterpretation(np);
 
-  if(np.article == 'the') {
+  if (np.article == "the") {
     // Find recent np that are a logical match.
     // Score them depending on number of introductions etc
-    for(let mention of ctx.iterateAnaphora()) {
-      let initialMapping:PartialMapping = [mention.returns];
-      for(let mapping of findImperfectMappings(claim, ctx.present)) {
-
+    for (let mention of ctx.iterateAnaphora()) {
+      let initialMapping: PartialMapping = [mention.returns];
+      for (let mapping of findImperfectMappings(claim, ctx.present)) {
       }
     }
-  } else
-    return ;
+  } else return;
 }
-
-

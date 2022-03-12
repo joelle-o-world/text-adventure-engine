@@ -1,11 +1,11 @@
-import {wordnetParse} from '../grammar/suggestSyntax';
-import {evaluateTree} from '../grammar/tree';
-import {interpretSimplePresent} from './interpret';
+import { wordnetParse } from "../grammar/suggestSyntax";
+import { evaluateTree } from "../grammar/tree";
+import { interpretSimplePresent } from "./interpret";
 
-async function * oneStepInterpretation(str:string) {
+async function* oneStepInterpretation(str: string) {
   const forest = await wordnetParse(str);
 
-  for(let tree of forest.recursiveTrees()) {
+  for (let tree of forest.recursiveTrees()) {
     const evaluation = evaluateTree(tree);
     const interpretation = interpretSimplePresent(evaluation);
 
@@ -13,19 +13,18 @@ async function * oneStepInterpretation(str:string) {
   }
 }
 
-describe('Interpreting a sentences', () => {
+describe("Interpreting a sentences", () => {
   test.each([
-    'the woman lives on the hill',
-    'the hoover loves the orange melon',
+    "the woman lives on the hill",
+    "the hoover loves the orange melon",
     "the priest seduces the pope under a starry sky",
-  ])('Interpretting "%s"', async str => {
+  ])('Interpretting "%s"', async (str) => {
     let numberOfIntepretations = 0;
-    for await(let interpretation of oneStepInterpretation(str)) {
+    for await (let interpretation of oneStepInterpretation(str)) {
       numberOfIntepretations++;
       console.log(`"${str}"\n`, interpretation.symbol);
     }
 
     expect(numberOfIntepretations).toBeGreaterThanOrEqual(1);
   });
-
 });

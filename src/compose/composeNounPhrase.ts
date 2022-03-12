@@ -1,5 +1,5 @@
 import { properNounRegex } from "../parsing";
-import { toPlural } from '../util/plural'
+import { toPlural } from "../util/plural";
 import { Template } from "../Template";
 import { toPossessiveAdjective } from "../util";
 
@@ -16,44 +16,37 @@ type NounPhraseComposable = {
 
   // OR
   properNoun?: string;
-}
+};
 
-export function composeNounPhrase(args:NounPhraseComposable) {
+export function composeNounPhrase(args: NounPhraseComposable) {
   // If a proper noun just return the proper noun.
-  if(args.properNoun) {
-    if(!properNounRegex.test(args.properNoun))
-      throw `Proper noun is not valid: ${args.properNoun}`
+  if (args.properNoun) {
+    if (!properNounRegex.test(args.properNoun))
+      throw `Proper noun is not valid: ${args.properNoun}`;
     return args.properNoun;
-  } else if(args.noun) {
+  } else if (args.noun) {
     // De-structure args
-    let {noun, adjectives=[], plural=false, possessor} = args;
+    let { noun, adjectives = [], plural = false, possessor } = args;
 
     // Choose the article.
-    let article
-    if(args.article)
-      article = args.article;
-    else if(possessor)
-      article = toPossessiveAdjective(possessor);
-    else if(args.definite === false || args.indefinite === true)
-      article = plural ? 'some' : 'a';
-    else
-      article = 'the';
+    let article;
+    if (args.article) article = args.article;
+    else if (possessor) article = toPossessiveAdjective(possessor);
+    else if (args.definite === false || args.indefinite === true)
+      article = plural ? "some" : "a";
+    else article = "the";
 
     // Pluralise noun
-    if(plural)
-      noun = toPlural(noun);
+    if (plural) noun = toPlural(noun);
 
     /** Adjectives and noun concatenated */
-    let adjsnoun = [...adjectives, noun].join(' ');
-    
-    if(article == 'a' && plural)
-      article = 'some';
+    let adjsnoun = [...adjectives, noun].join(" ");
+
+    if (article == "a" && plural) article = "some";
 
     // Conjugate indefinite article
-    if(article == 'a' && /^[aeiouh]/i.test(adjsnoun))
-      article = 'an';
+    if (article == "a" && /^[aeiouh]/i.test(adjsnoun)) article = "an";
 
     return `${article} ${adjsnoun}`;
-  } else
-    throw "unable to compose noun phrase";
+  } else throw "unable to compose noun phrase";
 }

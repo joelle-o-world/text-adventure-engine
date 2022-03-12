@@ -29,101 +29,106 @@ Tenses: [source ef.co.uk]
 
 import { gerundify, pastify, participly } from "./verbOperations";
 
-export const allTenses:Tense[] = [
-  'simple_present',
-  'present_continuous',
-  'simple_past',
-  'past_continuous',
-  'past_perfect',
-  'past_perfect_continuous',
-  'present_perfect',
-  'present_perfect_continuous',
-  'future_perfect',
-  'future_perfect_continuous',
-  'simple_future',
-  'future_continuous'
-]
+export const allTenses: Tense[] = [
+  "simple_present",
+  "present_continuous",
+  "simple_past",
+  "past_continuous",
+  "past_perfect",
+  "past_perfect_continuous",
+  "present_perfect",
+  "present_perfect_continuous",
+  "future_perfect",
+  "future_perfect_continuous",
+  "simple_future",
+  "future_continuous",
+];
 
-export type Tense = (
-  'simple_present' | 'present_continuous' 
-  | 'present_perfect' | 'present_perfect_continuous' 
-  | 'simple_past' | 'past_continuous' | 'past_perfect'
-  | 'past_perfect_continuous'
-  | 'future_perfect' | 'future_perfect_continuous' | 'simple_future' 
-  | 'future_continuous'
-);
+export type Tense =
+  | "simple_present"
+  | "present_continuous"
+  | "present_perfect"
+  | "present_perfect_continuous"
+  | "simple_past"
+  | "past_continuous"
+  | "past_perfect"
+  | "past_perfect_continuous"
+  | "future_perfect"
+  | "future_perfect_continuous"
+  | "simple_future"
+  | "future_continuous";
 
-export function isTense(o:any):o is Tense {
-  return typeof o == 'string' && (allTenses as string[]).includes(o)
+export function isTense(o: any): o is Tense {
+  return typeof o == "string" && (allTenses as string[]).includes(o);
 }
 
 export function verbToTense(
-  /** verb in infinitive form */ inf:string, 
-  tense:Tense
-):string {
-  switch(tense) {
-    case 'simple_present':
+  /** verb in infinitive form */ inf: string,
+  tense: Tense
+): string {
+  switch (tense) {
+    case "simple_present":
       return inf;
 
-    case 'present_continuous':
+    case "present_continuous":
       return `be ${gerundify(inf)}`;
 
-    case 'simple_past':
+    case "simple_past":
       return pastify(inf);
 
-    case 'past_continuous':
+    case "past_continuous":
       return `were ${gerundify(inf)}`;
 
-    case 'present_perfect':
+    case "present_perfect":
       return `have ${participly(inf)}`;
 
-    case 'present_perfect_continuous':
+    case "present_perfect_continuous":
       return `have been ${gerundify(inf)}`;
 
-    case 'past_perfect':
+    case "past_perfect":
       return `had ${participly(inf)}`;
 
-    case 'past_perfect_continuous':
+    case "past_perfect_continuous":
       return `had been ${gerundify(inf)}`;
 
-    case 'future_perfect':
+    case "future_perfect":
       return `will have ${participly(inf)}`;
 
-    case 'future_perfect_continuous':
+    case "future_perfect_continuous":
       return `will have been ${gerundify(inf)}`;
 
-    case 'simple_future':
+    case "simple_future":
       return `will ${inf}`;
 
-    case 'future_continuous':
+    case "future_continuous":
       return `will be ${gerundify(inf)}`;
 
-    default: 
-      throw `Unexpected or unsupported tense: ${tense}`
+    default:
+      throw `Unexpected or unsupported tense: ${tense}`;
   }
 }
 
 /** A tense that is not syntactically exact, to simplify logical interpretations. */
-export type CoarseTense = 'past'|'present'|'future';
+export type CoarseTense = "past" | "present" | "future";
 
-export function toCoarseTense(tense:Tense):CoarseTense {
-  switch(tense) {
-    case 'past_perfect':
-    case 'past_perfect_continuous':
-    case 'past_continuous':
-    case 'present_perfect':
-    case 'present_perfect_continuous':
-    case 'simple_past':
-      return 'past';
+export function toCoarseTense(tense: Tense): CoarseTense {
+  switch (tense) {
+    case "past_perfect":
+    case "past_perfect_continuous":
+    case "past_continuous":
+    case "present_perfect":
+    case "present_perfect_continuous":
+    case "simple_past":
+      return "past";
 
-    case 'simple_present':
-    case 'present_continuous':
-      return 'present'
+    case "simple_present":
+    case "present_continuous":
+      return "present";
 
-    case 'future_continuous':
-    case 'future_perfect':
-    case 'future_perfect_continuous':
-    case 'simple_future':
-      return 'future';
+    case "future_continuous":
+    case "future_perfect":
+    case "future_perfect_continuous":
+    case "simple_future":
+      return "future";
   }
 }

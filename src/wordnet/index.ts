@@ -1,2 +1,2 @@
-export * from './pos-tagging';
-export * from './preparePosTagParseTable';
+export * from "./pos-tagging";
+export * from "./preparePosTagParseTable";

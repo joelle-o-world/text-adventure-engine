@@ -4,7 +4,8 @@
   "description": "An engine for hosting multiplayer text adventure games",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "format": "npx prettier --write src"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.22",
     "jest": "^24.9.0",
+    "prettier": "^2.5.1",
     "ts-jest": "^24.1.0",
     "tsc": "^1.20150623.0",
     "typescript": "^3.6.4"

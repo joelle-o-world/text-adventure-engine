@@ -6,4 +6,4 @@ export const endsWithEd = /ed$/;
 export const endsWithOOrX = /[oxzs]$/;
 export const endsWithOesOrXes = /[xzos]es$/;
 export const endsWithS = /s$/;
-export const firstLetterCapital = /^[A-Z]/
+export const firstLetterCapital = /^[A-Z]/;

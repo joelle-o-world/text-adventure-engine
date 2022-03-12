@@ -19,24 +19,22 @@ export const EntityRegex = /^\w+$/;
 /**
  * Check that an object is a valid entity string
  */
-export function isEntity(o:any):o is Entity {
-  return typeof o == 'string' && EntityRegex.test(o);
+export function isEntity(o: any): o is Entity {
+  return typeof o == "string" && EntityRegex.test(o);
 }
-
 
 let entityCounter = -1;
 
-/** 
- * Create a new unique entity string 
+/**
+ * Create a new unique entity string
  */
 export function createEntity() {
   entityCounter++;
-  return 'abc'[entityCounter % 3] + (Math.floor(entityCounter/3) || '');
+  return "abc"[entityCounter % 3] + (Math.floor(entityCounter / 3) || "");
 }
 
-export function * createEntities() {
-  while(true)
-    yield createEntity();
+export function* createEntities() {
+  while (true) yield createEntity();
 }
 
 /**
@@ -49,10 +47,9 @@ export const VariableRegex = /^[xyz]/;
 /**
  * Check that an object is a valid variable string.
  */
-export function isVariable(o:any):o is Variable {
-  return typeof o == 'string' && VariableRegex.test(o);
+export function isVariable(o: any): o is Variable {
+  return typeof o == "string" && VariableRegex.test(o);
 }
-
 
 let variableCounter = -1;
 
@@ -61,12 +58,11 @@ let variableCounter = -1;
  */
 export function createVariable() {
   ++variableCounter;
-  return 'xyz'[variableCounter % 3] + (Math.floor(variableCounter/3) || '');
+  return "xyz"[variableCounter % 3] + (Math.floor(variableCounter / 3) || "");
 }
 
-export function * createVariables() {
-  while(true)
-    yield createVariable();
+export function* createVariables() {
+  while (true) yield createVariable();
 }
 
 /**
@@ -74,27 +70,27 @@ export function * createVariables() {
  */
 export type Predicate = string;
 
-export const PredicateRegex = /^[0-9\w_]*\/(\d+)/
+export const PredicateRegex = /^[0-9\w_]*\/(\d+)/;
 
 /**
  * Check whether a given object is a valid predicate string
  */
-export function isPredicate(o: any):o is Predicate {
-  return typeof o == 'string' && PredicateRegex.test(o);
+export function isPredicate(o: any): o is Predicate {
+  return typeof o == "string" && PredicateRegex.test(o);
 }
 
 let predicateCounter = -1;
-export function createPredicate(numberOfArgs:number) {
-  predicateCounter ++ ;
-  return `${'PQR'[predicateCounter%3]}${Math.floor(predicateCounter/3) || ''}/${numberOfArgs}`;
+export function createPredicate(numberOfArgs: number) {
+  predicateCounter++;
+  return `${"PQR"[predicateCounter % 3]}${
+    Math.floor(predicateCounter / 3) || ""
+  }/${numberOfArgs}`;
 }
 
-export function getNumberOfArguments(predicate:Predicate) {
+export function getNumberOfArguments(predicate: Predicate) {
   const parse = PredicateRegex.exec(predicate);
-  if(parse)
-    return parseInt(parse[1]);
-  else
-    throw `Not a valid predicate: "${predicate}"`;
+  if (parse) return parseInt(parse[1]);
+  else throw `Not a valid predicate: "${predicate}"`;
 }
 
 /**
@@ -102,21 +98,23 @@ export function getNumberOfArguments(predicate:Predicate) {
  */
 export interface Sentence {
   predicate: Predicate;
-  args: (Entity|Variable)[];
+  args: (Entity | Variable)[];
 }
 
-export function isSentence(o:any) {
-  return typeof o == 'object' &&
+export function isSentence(o: any) {
+  return (
+    typeof o == "object" &&
     isPredicate(o.predicate) &&
     o.args instanceof Array &&
-    o.args.every((arg:any) => isEntity(arg)) &&
+    o.args.every((arg: any) => isEntity(arg)) &&
     getNumberOfArguments(o.predicate) == o.args.length
+  );
 }
 
-export function stringifyArgs(S:Sentence) {
-  return S.args.join(',');
+export function stringifyArgs(S: Sentence) {
+  return S.args.join(",");
 }
 
-export function stringifySentence(S:Sentence) {
+export function stringifySentence(S: Sentence) {
   return `${S.predicate}(${stringifyArgs(S)})`;
 }

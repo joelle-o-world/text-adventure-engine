@@ -1,2 +1,2 @@
-export * from './interpret';
-export * from './interpretString';
+export * from "./interpret";
+export * from "./interpretString";

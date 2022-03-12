@@ -1,6 +1,6 @@
-import {Grammar} from './Grammar';
-import {MorphologyRelation} from '../morphology';
-/** 
+import { Grammar } from "./Grammar";
+import { MorphologyRelation } from "../morphology";
+/**
  * A very limited Part of Speech tagging grammar for unit testing purposes only. */
 export const ExamplePOSGrammar = Grammar.quick(
   `
@@ -13,10 +13,20 @@ export const ExamplePOSGrammar = Grammar.quick(
   `,
   {
     // Mocking up wordnet/morphology/deconjugation
-    '_conjugatedVerb -> dance ; skate ; chase':
-      (terminal:string):MorphologyRelation => ({form:'conjugatedVerb', base:terminal, baseForm:'infinitive'}),
-    '_gerund -> appreciating ; dancing ; skating ; chasing':
-      (terminal:string):MorphologyRelation => ({form:'gerund', base:terminal, baseForm:'infinitive'}),
+    "_conjugatedVerb -> dance ; skate ; chase": (
+      terminal: string
+    ): MorphologyRelation => ({
+      form: "conjugatedVerb",
+      base: terminal,
+      baseForm: "infinitive",
+    }),
+    "_gerund -> appreciating ; dancing ; skating ; chasing": (
+      terminal: string
+    ): MorphologyRelation => ({
+      form: "gerund",
+      base: terminal,
+      baseForm: "infinitive",
+    }),
   }
 );
 

@@ -1,19 +1,19 @@
 import { Noun } from "./Noun";
 import { Adjective } from "./Adjective";
 import { PredicateSyntax } from "./PredicateSyntax";
-import {Template} from './Template';
-type StatementSyntax = Template|PredicateSyntax;
+import { Template } from "./Template";
+type StatementSyntax = Template | PredicateSyntax;
 
 export class Dictionary {
   /** List of all nouns in the dictionary. */
   nouns: Noun[];
   /** Nouns indexed by last word. */
-  nounIndex: {[key:string]:Noun[]}
+  nounIndex: { [key: string]: Noun[] };
 
   /** List of all adjectives in the dictionary. */
   adjectives: Adjective[];
   /** Adjectives indexed by last word. */
-  adjectiveIndex: {[key: string]: Adjective[]}
+  adjectiveIndex: { [key: string]: Adjective[] };
 
   statementSyntaxs: StatementSyntax[];
   predicateSyntaxs: PredicateSyntax[];
@@ -30,19 +30,18 @@ export class Dictionary {
   }
 
   /** Add a noun to the dictionary. */
-  addNoun(nounOrString:Noun|string) : this {
+  addNoun(nounOrString: Noun | string): this {
     // Handle string input.
-    const noun = typeof nounOrString == 'string' 
-      ? new Noun(nounOrString) 
-      : nounOrString
+    const noun =
+      typeof nounOrString == "string" ? new Noun(nounOrString) : nounOrString;
 
     /** Last word of the noun. */
     const lastWord = noun.lastWord;
 
     // Exit early if there is a duplicate noun.
     let subIndex = this.nounIndex[lastWord];
-    if(subIndex && subIndex.find(dupe => dupe.str == noun.str)) {
-      console.trace( `Adding duplicate noun to dictionary: "${noun.str}"`);
+    if (subIndex && subIndex.find((dupe) => dupe.str == noun.str)) {
+      console.trace(`Adding duplicate noun to dictionary: "${noun.str}"`);
       return this;
     }
 
@@ -50,11 +49,9 @@ export class Dictionary {
     this.nouns.push(noun);
 
     // Index the noun by its last word
-    if(this.nounIndex[lastWord])
-      this.nounIndex[lastWord].push(noun);
-    else
-      this.nounIndex[lastWord] = [noun];
-    
+    if (this.nounIndex[lastWord]) this.nounIndex[lastWord].push(noun);
+    else this.nounIndex[lastWord] = [noun];
+
     this.addStatementSyntaxs(noun.predicateSyntax);
 
     // Chainable
@@ -62,48 +59,43 @@ export class Dictionary {
   }
 
   /** Add multiple nouns to the dictionary */
-  addNouns(...nouns:(Noun|string)[]) : this {
-    for(let noun of nouns)
-      this.addNoun(noun);
+  addNouns(...nouns: (Noun | string)[]): this {
+    for (let noun of nouns) this.addNoun(noun);
 
     return this;
   }
 
   /** Add an adjective to the dictionary. */
-  addAdjective(adjOrString: Adjective|string) : this {
+  addAdjective(adjOrString: Adjective | string): this {
     // Handle string input
-    let adj = typeof adjOrString == 'string'
-      ? new Adjective(adjOrString)
-      : adjOrString
+    let adj =
+      typeof adjOrString == "string" ? new Adjective(adjOrString) : adjOrString;
 
     /** Last word of adjective (they can be phrasal). */
     const lastWord = adj.lastWord;
 
     // Exit early if adjective already exists in teh dictionary.
     let subIndex = this.adjectiveIndex[lastWord];
-    if(subIndex && subIndex.find(dupe => dupe.str == adj.str)) {
-      console.trace(`Adding duplicate adjective to dictionary: ${adj.str}`)
-      return this
+    if (subIndex && subIndex.find((dupe) => dupe.str == adj.str)) {
+      console.trace(`Adding duplicate adjective to dictionary: ${adj.str}`);
+      return this;
     }
 
     // Add adj to the list of adjectives
     this.adjectives.push(adj);
 
     // Index the adjective by last word.
-    if(this.adjectiveIndex[lastWord])
-      this.adjectiveIndex[lastWord].push(adj);
-    else
-      this.adjectiveIndex[lastWord] = [adj];
-    
+    if (this.adjectiveIndex[lastWord]) this.adjectiveIndex[lastWord].push(adj);
+    else this.adjectiveIndex[lastWord] = [adj];
+
     this.addStatementSyntaxs(adj.predicateSyntax);
 
     return this;
   }
 
   /** Add multiple adjectives to the dictionary. */
-  addAdjectives(...adjs: (Adjective|string)[]) : this {
-    for(let adj of adjs)
-      this.addAdjective(adj);
+  addAdjectives(...adjs: (Adjective | string)[]): this {
+    for (let adj of adjs) this.addAdjective(adj);
 
     return this;
   }
@@ -111,15 +103,14 @@ export class Dictionary {
   /** Add a present tense statement syntax to the dictionary. */
   addStatementSyntax(syntax: StatementSyntax) {
     // Exit early if syntax already exists.
-    if(this.statementSyntaxs.includes(syntax)) {
+    if (this.statementSyntaxs.includes(syntax)) {
       // console.trace(`Adding duplicate syntax to the dictionary:`, syntax)
       return this;
     }
 
     this.statementSyntaxs.push(syntax);
 
-    if(syntax instanceof PredicateSyntax)
-      this.predicateSyntaxs.push(syntax);
+    if (syntax instanceof PredicateSyntax) this.predicateSyntaxs.push(syntax);
 
     // Chainable
     return this;
@@ -127,8 +118,7 @@ export class Dictionary {
 
   /** Add multiple present tense statement syntaxs to the dictionary. */
   addStatementSyntaxs(...syntaxs: StatementSyntax[]) {
-    for(let syntax of syntaxs)
-      this.addStatementSyntax(syntax);
+    for (let syntax of syntaxs) this.addStatementSyntax(syntax);
 
     // Chainable
     return this;

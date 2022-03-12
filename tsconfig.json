@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
-      "outDir": "./built",
-      "allowJs": true,
-      "target": "es5",
-      "lib": ["esnext"], 
-      "noImplicitAny": true,
-      "downlevelIteration": true,
-      "strictNullChecks": true,
-      "declaration": true
+    "outDir": "./built",
+    "target": "es5",
+    "lib": ["esnext"],
+    "noImplicitAny": true,
+    "downlevelIteration": true,
+    "strictNullChecks": true,
+    "declaration": true
   },
-  "include": [
-      "./src/**/*"
-  ]
+  "include": ["./src/**/*"]
 }
