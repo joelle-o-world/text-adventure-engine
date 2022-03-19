@@ -1,0 +1,6 @@
+{
+  "name": "compose-english-phrases",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT"
+}
