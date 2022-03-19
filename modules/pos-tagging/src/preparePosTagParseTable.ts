@@ -1,6 +1,6 @@
-import { ParseTable } from "../grammar/Grammar";
+import { ParseTable } from "context-free-grammar";
 import { posTagString } from "./pos-tagging";
-import { isMorphologyRelation } from "../morphology";
+import { isMorphologyRelation } from "english-morphology";
 
 export async function preparePosTagParseTable(
   str: string[]
