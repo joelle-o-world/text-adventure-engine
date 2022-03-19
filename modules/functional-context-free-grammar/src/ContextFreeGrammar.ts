@@ -1,36 +1,4 @@
-import { GrammarRuleFunction } from "./FunctionGrammar";
-
-export interface Rule {
-  src?: string;
-  id?: number | string;
-  ruleFunction?: GrammarRuleFunction;
-}
-
-export interface TerminalRule<
-  TerminalSymbol,
-  NonTerminalSymbol = TerminalSymbol
-> extends Rule {
-  head: NonTerminalSymbol;
-  body: TerminalSymbol;
-}
-
-export interface NonTerminalRule<
-  TerminalSymbol,
-  NonTerminalSymbol = TerminalSymbol
-> extends Rule {
-  head: NonTerminalSymbol;
-  body: [NonTerminalSymbol, NonTerminalSymbol];
-}
-
-/** A context free grammar in chomsky normal form */
-export interface ContextFreeGrammar<
-  TerminalSymbol = string,
-  NonTerminalSymbol = TerminalSymbol
-> {
-  nonTerminalRules: NonTerminalRule<TerminalSymbol, NonTerminalSymbol>[];
-  terminalRules: TerminalRule<TerminalSymbol, NonTerminalSymbol>[];
-  startingSymbol?: NonTerminalSymbol;
-}
+import { AnnotatedTree, ContextFreeGrammar, ParseTreeSymbol } from "./types";
 
 /**
  * Determine if a given grammar recognises a given string. Implementation of the
@@ -84,12 +52,6 @@ export function cfgRecognise(
   else return false;
 
   // TODO: Could be optimised by indexing `table`
-}
-
-export interface ParseTreeSymbol {
-  from: number;
-  to: number;
-  S: string;
 }
 
 export function cfgParse(grammar: ContextFreeGrammar<string>, str: string[]) {
@@ -213,12 +175,6 @@ export function* recursiveSubstitutions(
       }
     }
   }
-}
-
-export interface AnnotatedTree<Terminal = string, NonTerminal = Terminal> {
-  head: NonTerminal;
-  body: (Terminal | AnnotatedTree<Terminal, NonTerminal>)[];
-  ruleId?: number | string;
 }
 
 export function* recursiveAnnotations(
