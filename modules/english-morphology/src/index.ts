@@ -22,3 +22,14 @@ export function isMorphologyRelation(x: any): x is MorphologyRelation {
     typeof x.baseForm === "string"
   );
 }
+
+export * as alternativeConjugation from "./alternative-conjugation";
+
+export { isPastParticiple } from "./isPastParticiple";
+
+export { toPossessiveAdjective as possessiveAdjective } from "./toPossessiveAdjective";
+
+/**
+ * @deprecated - use `possessiveAdjetive()` instead
+ */
+export { toPossessiveAdjective } from "./toPossessiveAdjective";

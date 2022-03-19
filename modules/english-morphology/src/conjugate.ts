@@ -8,7 +8,7 @@ import {
   endsWithDoubleShortConsonant,
   endsWithIng,
   endsWithEd,
-} from "./usefulRegex";
+} from "useful-regular-expressions";
 import {
   deconjugateIrregular,
   getIrregularConjugation,
