@@ -1,0 +1,10 @@
+{
+  "name": "preset-grammars",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "context-free-grammar": "1.0.0",
+    "english-morphology": "1.0.0"
+  }
+}
