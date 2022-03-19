@@ -9,7 +9,7 @@
     "format": "npx prettier --write src"
   },
   "workspaces": [
-    "packages/*"
+    "modules/*"
   ],
   "repository": {
     "type": "git",
