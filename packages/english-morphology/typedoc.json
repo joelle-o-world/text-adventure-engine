@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["./src/index.ts"],
+  "out": ".",
+  "plugin": "typedoc-plugin-markdown",
+  "readme": "none",
+  "cleanOutputDir": false,
+  "hideBreadcrumbs": true,
+  "categorizeByGroup": false,
+  "hideInPageTOC": true
+}
