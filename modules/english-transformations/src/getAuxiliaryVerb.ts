@@ -1,7 +1,6 @@
 import { alternativeConjugation } from "english-morphology";
-import { getFirstWord } from "./getFirstWord";
+import { getFirstWord } from "string-utils";
 const { conjugate, PAST_TENSE } = alternativeConjugation;
-import { isPastParticiple } from "./isPastParticiple";
 
 const auxiliaryInfitinitives = [
   "be",
