@@ -1,4 +1,4 @@
-import { composeNounPhrase } from "./composeNounPhrase";
+import composeNounPhrase from "./composeNounPhrase";
 
 test("composing noun phrases", () => {
   expect(
