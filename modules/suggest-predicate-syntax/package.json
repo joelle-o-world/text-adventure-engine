@@ -1,0 +1,10 @@
+{
+  "name": "suggest-predicate-syntax",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@types/deep-equal": "^1.0.1",
+    "deep-equal": "^2.0.5"
+  }
+}
