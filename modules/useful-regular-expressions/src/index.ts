@@ -7,3 +7,11 @@ export const endsWithOOrX = /[oxzs]$/;
 export const endsWithOesOrXes = /[xzos]es$/;
 export const endsWithS = /s$/;
 export const firstLetterCapital = /^[A-Z]/;
+
+/**
+ * Any number of words, each of which begin with a capitol letter
+ */
+export const properNounRegex = /^[A-Z]\w*(?: [A-Z]\w*)*$/;
+
+export const possessiveAdjectiveRegex =
+  /my|your|his|her|its|their|(?:[\w ]*\w(?:\'s|s\'))/;
