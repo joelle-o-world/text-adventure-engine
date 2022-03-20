@@ -1,8 +1,3 @@
-/**
- * Kinda @deprecated, just kept here because it broke some unit tests to remove it.
- */
-export const properNounRegex = /^[A-Z]\w*(?: [A-Z]\w*)*$/;
-
 import {
   NounPhraseParse,
   PredicateSyntaxParse,
