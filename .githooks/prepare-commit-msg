@@ -1,0 +1,33 @@
+#!/bin/bash
+
+COMMIT_MSG_FILE=$1
+
+# Skip this if there is already  a message
+originalTitle=$(head -n 1 $COMMIT_MSG_FILE)
+if [[ "$originalTitle" != "" ]];
+then 
+  echo "Skipping template because commit message is not empty: \"$originalTitle\""
+  exit 0;
+fi
+
+concerns=""
+
+foundOneAlready=0
+for concernPath in modules/* src
+do
+  concern=$(basename $concernPath | cut -d. -f1);
+  if ! git diff --quiet --cached -- $concernPath;
+  then
+    if !(exit $foundOneAlready); then 
+      concerns+="+"; 
+    fi
+    concerns+=$concern
+    foundOneAlready=1
+  fi
+done
+
+
+if [[ "$concerns" != "" ]];
+then
+  echo -e "($concerns):$(cat $COMMIT_MSG_FILE)" > $COMMIT_MSG_FILE;
+fi
