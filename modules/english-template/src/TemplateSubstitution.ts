@@ -1,8 +1,8 @@
-import { Template } from "./Template";
+import Template from "./Template";
 
-export type Substitutable = string | Substitution;
+export type Substitutable = string | TemplateSubstitution;
 
-export class Substitution {
+export default class TemplateSubstitution {
   template: Template;
   args: Substitutable[];
 
@@ -16,7 +16,7 @@ export class Substitution {
   str(): string {
     let stringArgs = this.args.map((arg) => {
       if (typeof arg == "string") return arg;
-      else if (arg instanceof Substitution) return arg.str();
+      else if (arg instanceof TemplateSubstitution) return arg.str();
       else throw "Unexpected Substitution argument: " + arg;
     });
 
@@ -25,6 +25,6 @@ export class Substitution {
 
   /** Shorthand constructor for `Substitution` */
   static sub(template: string | Template, ...args: Substitutable[]) {
-    return new Substitution(template, ...args);
+    return new TemplateSubstitution(template, ...args);
   }
 }
