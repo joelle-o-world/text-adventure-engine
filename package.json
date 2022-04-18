@@ -5,8 +5,9 @@
   "description": "An engine for hosting multiplayer text adventure games",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "format": "npx prettier --write src"
+    "test": "jest && npm run typecheck",
+    "format": "npx prettier --write src",
+    "typecheck": "npx tsc --noEmit"
   },
   "workspaces": [
     "modules/*"
