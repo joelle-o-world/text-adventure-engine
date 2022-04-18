@@ -1,4 +1,3 @@
-import { Morphology } from "./basic-types";
 import { irregularPlurals, irregularSingulars } from "./irregularPlurals";
 
 export const regularPluralisation = {

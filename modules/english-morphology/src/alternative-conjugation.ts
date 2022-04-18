@@ -18,78 +18,45 @@ VERB FORMS DENOTED AS NUMBERS:
 */
 
 import * as regOp from "regops";
-import { getIrregularConjugation } from "./irregularConjugations";
 import { shiftWord } from "string-utils";
+import { conjugateRegularVerb } from "./conjugateRegularVerb";
+import { conjugateIrregularVerb } from "./irregularConjugations";
+import { VerbFormNumber, numberToVerbForm } from "./verb-forms";
 
-const endsWithShortConsonant = /[aeiou][tpdnl]$/;
-const endsWithE = /e$/;
-const endsWithOOrX = /[oxzs]$/;
+/**
+ * Conjugate a verb (by itself)
+ *
+ * ## Differences between this and the main `conjugate` function
+ *
+ *  - Accepts a number for `form` instead of a string
+ *  - Returns a single string, never an array or null
+ *  - Can handle phrasal verbs
+ *  - Attempts to return RegExp (but buggy)
+ */
+export function conjugate(verb: string, form: VerbFormNumber): string {
+  const [infinitive, extra] = splitPhrasalVerb(verb);
 
-// TODO: Use an enum
-export const FIRST_PERSON_SINGULAR = 1; // I
-export const SECOND_PERSON_SINGULAR = 2; // you
-export const THIRD_PERSON_SINGULAR = 3; // he/she/it
-export const FIRST_PERSON_PLURAL = 4; // we
-export const SECOND_PERSON_PLURAL = 5; // you
-export const THIRD_PERSON_PLURAL = 6; // they
-export const GERUND = 7;
-export const PAST_PARTICIPLE = 8;
-export const PAST_TENSE = 9;
-export const ALL_PERSON_REGEX = 10;
-declare type VerbForm = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-
-/** Conjugate a verb (by itself) */
-export function conjugate(verb: string, form: number): string {
-  let i1 = verb.search(/[ .,!?]/);
-
-  let infinitive: string, extra: string;
-  if (i1 == -1) {
-    infinitive = verb;
-    extra = "";
-  } else {
-    infinitive = verb.slice(0, i1);
-    extra = verb.slice(i1);
+  if (form === VerbFormNumber.ALL_PERSON_REGEX) {
+    // BUG: probably need to escape extra and make sure what is returned is a regexp?
+    return anyPersonRegex(infinitive) + extra;
   }
 
-  let conjugated,
-    irregular = getIrregularConjugation(infinitive, form);
-  if (form == ALL_PERSON_REGEX) conjugated = anyPersonRegex(infinitive);
-  else if (irregular) conjugated = irregular;
-  else conjugated = conjugateRegular(infinitive, form);
+  let conjugated =
+    conjugateIrregularVerb(infinitive, numberToVerbForm(form)) ||
+    conjugateRegularVerb(infinitive, numberToVerbForm(form));
 
   return conjugated + extra;
 }
 
-/** Conjugate a regular verb. */
-function conjugateRegular(infinitive: string, form: number) {
-  switch (form) {
-    // third person singular
-    case THIRD_PERSON_SINGULAR:
-      if (endsWithOOrX.test(infinitive)) return infinitive + "es";
-      else return infinitive + "s";
-
-    // gerund
-    case GERUND:
-      if (endsWithE.test(infinitive))
-        return infinitive.slice(0, infinitive.length - 1) + "ing";
-      if (endsWithShortConsonant.test(infinitive))
-        return infinitive + infinitive[infinitive.length - 1] + "ing";
-      return infinitive + "ing";
-
-    // past participle
-    case PAST_TENSE:
-    case PAST_PARTICIPLE:
-      if (endsWithShortConsonant.test(infinitive))
-        return infinitive + infinitive[infinitive.length - 1] + "ed";
-      if (endsWithE.test(infinitive)) return infinitive + "d";
-      else return infinitive + "ed";
-
-    case ALL_PERSON_REGEX:
-      return anyPersonRegex(infinitive);
-
-    default:
-      return infinitive;
-  }
+/**
+ * Sometimes verbs have more than one word, in these cases we often want to
+ * treat the first word as the infinitive. This function fetches the first
+ * word from the phrasal verb
+ */
+export function splitPhrasalVerb(verb: string): [string, string] {
+  let i1 = verb.search(/[ .,!?]/);
+  if (i1 == -1) return [verb, ""];
+  else return [verb.slice(0, i1), verb.slice(i1)];
 }
 
 /** Get a regular expression matching any conjugation of the verb (Except infinitive, past participle or gerund). */

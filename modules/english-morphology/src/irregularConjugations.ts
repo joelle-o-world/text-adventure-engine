@@ -1,34 +1,11 @@
 // list of irregular verbs with their conjugations.
 // (indexed by infinitive)
 
-/*
-VERB FORMS DENOTED AS NUMBERS:
-  0.  infinitive
-  1.  first person singular
-  2.  second person singular
-  3.  third person singular
-  4.  first person plural
-  5.  second person plural
-  6.  third person plural
-  (7.  gerund/present-participle)
-  (8.  past-participle)
-  (9. past tense form)
-*/
-
-const FIRST_PERSON_SINGULAR = 1; // I
-const SECOND_PERSON_SINGULAR = 2; // you
-const THIRD_PERSON_SINGULAR = 3; // he/she/it
-const FIRST_PERSON_PLURAL = 4; // we
-const SECOND_PERSON_PLURAL = 5; // you
-const THIRD_PERSON_PLURAL = 6; // they
-const GERUND = 7; // -ing
-const PAST_PARTICIPLE = 8;
-const PAST_TENSE = 9;
-const ALL_PERSON_REGEX = 10;
+import { VerbForm, VerbFormNumber, verbFormToNumber } from "./verb-forms";
 
 const irregularConjugations: {
   [key: string]: {
-    [key: number]: string;
+    [key in VerbFormNumber]?: string;
   };
 } = {
   be: {
@@ -123,10 +100,12 @@ const irregularConjugations: {
 };
 
 // Construct a reverse index
-const reverseIndex: { [key: string]: { infinitive: string; form: number }[] } =
-  {};
+const reverseIndex: {
+  [key: string]: { infinitive: string; form: VerbFormNumber }[];
+} = {};
 for (let infinitive in irregularConjugations) {
   for (let form in irregularConjugations[infinitive]) {
+    // @ts-ignore
     let verb = irregularConjugations[infinitive][form];
     if (!reverseIndex[verb]) reverseIndex[verb] = [];
 
@@ -134,11 +113,20 @@ for (let infinitive in irregularConjugations) {
   }
 }
 
-export function getIrregularConjugation(verb: string, form: number) {
-  if (irregularConjugations[verb] && irregularConjugations[verb][form])
-    return irregularConjugations[verb][form];
+export function conjugateIrregularVerb(verb: string, form: VerbForm) {
+  const verbFormNumber = verbFormToNumber(form);
+  if (
+    irregularConjugations[verb] &&
+    irregularConjugations[verb][verbFormNumber]
+  )
+    return irregularConjugations[verb][verbFormNumber];
   else return null;
 }
+
+/**
+ * @deprecated - alias for conjugateIrregularVerb
+ */
+export const getIrregularConjugation = conjugateIrregularVerb;
 
 export function deconjugateIrregular(verb: string) {
   if (reverseIndex[verb]) return reverseIndex[verb];

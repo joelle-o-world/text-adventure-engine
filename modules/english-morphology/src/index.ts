@@ -1,9 +1,5 @@
-export {
-  conjugate,
-  conjugationTable,
-  deconjugate,
-  deconjugateConcise,
-} from "./conjugate";
+export * from "./conjugate";
+export * from "./deconjugate";
 export { plural, singular } from "./plural";
 
 /** @deprecated */

@@ -7,13 +7,14 @@
  * functions' final home.
  */
 
+import { VerbFormNumber } from "english-morphology/src/verb-forms";
 import Template from "english-template";
 import {
   alternativeConjugation,
   getAuxiliaryVerb,
 } from "english-transformations";
 
-const { conjugate, PAST_TENSE } = alternativeConjugation;
+const { conjugate } = alternativeConjugation;
 
 export function questionTemplate(verb: string) {
   let { aux, remainder } = getAuxiliaryVerb(verb);
@@ -33,7 +34,7 @@ export function simplePastQuestionTemplate(
     return new Template(remainder ? `>were _ ${remainder}` : ">were _");
   else {
     // NOTE: The alternativeConjugation version
-    let auxPast = conjugate(aux, PAST_TENSE);
+    let auxPast = conjugate(aux, VerbFormNumber.PAST_TENSE);
     return new Template(remainder ? `${auxPast} _ ${remainder}` : auxPast);
   }
 }

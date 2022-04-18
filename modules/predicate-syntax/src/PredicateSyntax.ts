@@ -24,12 +24,9 @@ import { toCamelCase, toSnakeCase } from "string-utils";
 import { sentenceFormSymbol } from "english-transformations";
 import { shiftWord } from "string-utils";
 import { createPredicateSyntaxPredicate } from "./linking";
-const {
-  anyPersonRegex,
-  anyConjugationRegex,
-  conjugate,
-  THIRD_PERSON_SINGULAR,
-} = alternativeConjugation;
+import { VerbFormNumber } from "english-morphology/src/verb-forms";
+const { anyPersonRegex, anyConjugationRegex, conjugate } =
+  alternativeConjugation;
 
 type Param = { name: string; index: number; entity: true };
 
@@ -127,7 +124,7 @@ export default class PredicateSyntax {
 
     // Choose a (non-unique) name
     this.name = toCamelCase(
-      conjugate(this.infinitive, THIRD_PERSON_SINGULAR),
+      conjugate(this.infinitive, VerbFormNumber.THIRD_PERSON_SINGULAR),
       ...this.prepositions
     );
 

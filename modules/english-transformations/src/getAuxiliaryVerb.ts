@@ -1,6 +1,7 @@
 import { alternativeConjugation } from "english-morphology";
+import { VerbFormNumber } from "english-morphology/src/verb-forms";
 import { getFirstWord } from "string-utils";
-const { conjugate, PAST_TENSE } = alternativeConjugation;
+const { conjugate } = alternativeConjugation;
 
 const auxiliaryInfitinitives = [
   "be",
@@ -21,7 +22,7 @@ const auxiliaryInfitinitives = [
 ];
 
 export const auxilliaryPasts = auxiliaryInfitinitives.map((ing) =>
-  conjugate(ing, PAST_TENSE)
+  conjugate(ing, VerbFormNumber.PAST_TENSE)
 );
 
 const auxiliaryVerbs: string[] = [];
