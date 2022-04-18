@@ -1,12 +1,10 @@
 import Template from "english-template";
+import { makeNegative, Tense, verbToTense } from "english-transformations";
+import { getFirstWord } from "string-utils";
 import {
   questionTemplate,
   simplePastQuestionTemplate,
-  makeNegative,
-  Tense,
-  verbToTense,
-} from "english-transformations";
-import { getFirstWord } from "string-utils";
+} from "./questionTemplates";
 
 /** Extra keys with string values interpretted as prepositional phrases. */
 type SentenceComposable = {
@@ -70,9 +68,8 @@ export default function compose(args: SentenceComposable): string {
   if (negative == "not") verb = makeNegative(verb);
 
   // Attach the subject to the verb
-  let verbPhrase;
+  let verbPhrase: string;
   if (question && tense == "simple_past") {
-    // @ts-ignore
     verbPhrase = simplePastQuestionTemplate(infinitive, negative).str([
       subject,
     ]);
@@ -84,7 +81,6 @@ export default function compose(args: SentenceComposable): string {
     else if (nounPhraseFor)
       verbPhrase = `${args[nounPhraseFor]} ${nounPhraseFor} which ${subject} ${verb}`;
     else verbPhrase = `${subject} ${verb}`;
-    // @ts-ignore
   } else if (question) verbPhrase = questionTemplate(verb).str([subject]);
   else if (nounPhraseFor == "subject")
     verbPhrase = new Template(`_ which <${verb}`).str([subject]);

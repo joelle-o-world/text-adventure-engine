@@ -6,14 +6,16 @@ import {
   initialAndWholeWord,
   concat,
 } from "regular-expression-operations";
-import { composeSentence } from "compose-english-phrases";
+import {
+  composeSentence,
+  questionRegex,
+  simplePastQuestionTemplate,
+} from "compose-english-phrases";
 import Template from "english-template";
 import {
   Tense,
   allTenses,
   verbToTense,
-  questionRegex,
-  simplePastQuestionTemplate,
   getAuxiliaryVerb,
   alternativeConjugation,
   makeNegative,
@@ -343,7 +345,6 @@ export default class PredicateSyntax {
     let result;
     if (question) {
       if (tense == "simple_past")
-        // @ts-ignore
         result = simplePastQuestionTemplate(this.infinitive, negative).regex();
       else result = questionRegex(verb);
     } else if (nounPhraseFor == "subject")

@@ -23,32 +23,3 @@ export function pastify(verb: string) {
 
   return rest ? `${past} ${rest}` : past;
 }
-
-export function questionTemplate(verb: string) {
-  throw "TODO: Rewrite without dependency on Template module";
-  //let { aux, remainder } = getAuxiliaryVerb(verb);
-  //if (remainder) return new Template(`>${aux} _ ${remainder}`);
-  //else return new Template(`>${aux} _`);
-}
-
-export function simplePastQuestionTemplate(
-  verb: string,
-  negative: "not" | false
-) {
-  throw "TODO: Rewrite without dependency on Template module";
-  //let { aux, remainder } = getAuxiliaryVerb(verb);
-
-  //if (negative) remainder = remainder ? `not ${remainder}` : "not";
-
-  //if (aux == "be")
-  //return new Template(remainder ? `>were _ ${remainder}` : ">were _");
-  //else {
-  //let auxPast = conjugate(aux, PAST_TENSE);
-  //return new Template(remainder ? `${auxPast} _ ${remainder}` : auxPast);
-  //}
-}
-
-export function questionRegex(verb: string) {
-  throw "TODO: Rewrite without dependency on Template module";
-  //return questionTemplate(verb).regex();
-}
