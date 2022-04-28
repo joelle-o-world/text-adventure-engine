@@ -1,5 +1,5 @@
-import { toSnakeCase } from "./util/toCamelCase";
-import { PredicateSyntax } from "./PredicateSyntax";
+import PredicateSyntax from "predicate-syntax";
+import { toSnakeCase } from "string-utils";
 
 export class Noun {
   str: string;

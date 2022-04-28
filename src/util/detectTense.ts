@@ -1,6 +1,4 @@
-import { concatSpaced } from "regops";
-import { anyPersonRegex } from "./conjugate";
-import { Tense } from "./tense";
+import { Tense } from "english-transformations";
 
 const tenseRegexs: { [key: string]: RegExp | null } = {
   simple_present: null,

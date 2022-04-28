@@ -1,9 +1,9 @@
 import { SyntaxLogicLinkingMatrix, Meaning } from "./SyntaxLogicLinkingMatrix";
 import { Predicate, createPredicate } from "../logic";
-import { PredicateSyntax } from "../PredicateSyntax";
 import { Adjective } from "../Adjective";
 import { Noun } from "../Noun";
 import { barge_world_dict } from "../dictionaries/barge-world";
+import PredicateSyntax from "predicate-syntax";
 
 test("SyntaxLogicLinkingMatrix", () => {
   let predicate = createPredicate(1);

@@ -1,5 +1,5 @@
 import { Entity, TruthTable, AdditionTable } from "../logic";
-import { NounPhraseParse } from "../grammar/parseTypings";
+import { NounPhraseParse } from "preset-grammars";
 
 export interface Mention {
   parse: NounPhraseParse;

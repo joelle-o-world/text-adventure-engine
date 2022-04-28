@@ -1,8 +1,8 @@
-import { getFirstWord } from "./getFirstWord";
-import { getAuxiliaryVerb } from "./getAuxiliaryVerb";
-import { isPastParticiple } from "./isPastParticiple";
 import { toPlural } from "./plural";
-import { toPossessiveAdjective } from "./toPossessiveAdjective";
+import { toPossessiveAdjective } from "english-transformations";
+import { isPastParticiple } from "english-morphology";
+import { getAuxiliaryVerb } from "english-transformations";
+import { getFirstWord } from "string-utils";
 
 test("getFirstWord", () => {
   expect(getFirstWord("A great festive day out this christmas")).toBe("A");

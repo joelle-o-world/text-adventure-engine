@@ -1,5 +1,5 @@
+import PredicateSyntax from "predicate-syntax";
 import { Dictionary } from "../Dictionary";
-import { PredicateSyntax } from "../PredicateSyntax";
 
 export const barge_world_dict = new Dictionary()
   .addNouns(

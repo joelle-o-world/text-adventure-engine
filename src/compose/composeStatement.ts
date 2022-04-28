@@ -1,8 +1,6 @@
 import { Sentence } from "../logic";
 import { isPredicateSyntaxWithTense } from "../linking/SyntaxLogicLinkingMatrix";
 import { composeEntity } from "./composeEntity";
-import { PredicateSyntax } from "../PredicateSyntax";
-import { Tense } from "../util/tense";
 
 export function composeStatement(
   statement: { sentence: Sentence; truth: string },
@@ -13,7 +11,7 @@ export function composeStatement(
       predicate: statement.sentence.predicate,
       truth: statement.truth,
     })
-    .filter((syntax) => isPredicateSyntaxWithTense(syntax));
+    .filter((syntax: unknown) => isPredicateSyntaxWithTense(syntax));
 
   if (syntaxs.length == 0) return null;
 

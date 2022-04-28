@@ -3,6 +3,7 @@ import {
   singular,
   MorphologyRelation,
 } from "english-morphology";
+import { VerbForm } from "english-morphology/src/verb-forms";
 import { firstLetterCapital } from "useful-regular-expressions";
 
 // @ts-ignore
@@ -98,19 +99,19 @@ export async function deluxePosTags(
     deconjugateWithDictionary(word).then((concise) => {
       let relations = [];
       for (let { forms, infinitive } of concise) {
-        if (forms.includes("gerund"))
+        if (forms.includes(VerbForm.GERUND))
           relations.push({
             form: "gerund",
             baseForm: "infinitive",
             base: infinitive,
           });
-        if (forms.includes("pastTense"))
+        if (forms.includes(VerbForm.PAST_TENSE))
           relations.push({
             form: "pastTense",
             baseForm: "infinitive",
             base: infinitive,
           });
-        if (forms.includes("pastParticiple"))
+        if (forms.includes(VerbForm.PAST_PARTICIPLE))
           relations.push({
             form: "pastParticiple",
             baseForm: "infinitive",

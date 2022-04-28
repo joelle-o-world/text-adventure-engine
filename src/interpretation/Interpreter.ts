@@ -5,14 +5,15 @@ import {
   Variable,
   createEntity,
 } from "../logic";
-import { createNounPredicate, createAdjectivePredicate } from "../linking/";
 import {
-  SimpleNounPhraseParse,
-  NounPhraseParse,
-} from "../grammar/parseTypings";
+  createNounPredicate,
+  createAdjectivePredicate,
+} from "predicate-syntax";
+import { SimpleNounPhraseParse } from "preset-grammars";
 import {
   findImperfectMappings,
   completePartialMapping,
+  PartialMapping,
 } from "../logic/mapping";
 import { Context } from "./Context";
 

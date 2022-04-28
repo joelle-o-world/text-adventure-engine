@@ -2,12 +2,11 @@ import { Adjective } from "../Adjective";
 
 import { Noun } from "../Noun";
 
-import { PredicateSyntax } from "../PredicateSyntax";
 import { Predicate, createPredicate } from "../logic";
-import { Tense, isTense } from "../util/tense";
 import { Dictionary } from "../Dictionary";
-import { toCamelCase } from "../util/toCamelCase";
-import { Template } from "../Template";
+import PredicateSyntax from "predicate-syntax";
+import { isTense, Tense } from "english-transformations";
+import Template from "english-template";
 
 /** There are 3 types of syntax (for now): Adjectives, nouns or sentences
  * MAY CHANGE IN FUTURE.

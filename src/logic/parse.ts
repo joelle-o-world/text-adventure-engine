@@ -1,11 +1,6 @@
-import * as r from "../util/regops.extended";
-import {
-  EntityRegex,
-  PredicateRegex,
-  VariableRegex,
-  isEntity,
-  isPredicate,
-} from "./basics";
+import * as r from "regular-expression-operations";
+
+import { isEntity, isPredicate } from "./basics";
 
 export const SentenceRegex = /(?<p>\w+\/\d+)\((?<args>\w+(\s*,\s*\w+)*)?\)/;
 export const wholeSentenceRegex = r.whole(SentenceRegex);

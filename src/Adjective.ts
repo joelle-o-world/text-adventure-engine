@@ -1,5 +1,5 @@
-import { toSnakeCase } from "./util/toCamelCase";
-import { PredicateSyntax } from "./PredicateSyntax";
+import { toSnakeCase } from "string-utils";
+import PredicateSyntax from "predicate-syntax";
 
 /** Class for storing an adjecitve inside a `Dictionary` object. */
 export class Adjective {

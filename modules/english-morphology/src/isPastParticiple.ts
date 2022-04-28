@@ -1,6 +1,5 @@
-import { alternativeConjugation } from ".";
 import { deconjugateIrregular } from "./irregularConjugations";
-const { PAST_PARTICIPLE } = alternativeConjugation;
+import { VerbFormNumber } from "./verb-forms";
 
 /** Detect whether a string is a past participle. */
 export function isPastParticiple(str: string) {
@@ -9,7 +8,11 @@ export function isPastParticiple(str: string) {
   else {
     // Try de-conjugating as an irregular verb
     let decon = deconjugateIrregular(str);
-    if (decon && decon.some(({ form }) => form == PAST_PARTICIPLE)) return true;
+    if (
+      decon &&
+      decon.some(({ form }) => form == VerbFormNumber.PAST_PARTICIPLE)
+    )
+      return true;
     else return false;
   }
 }

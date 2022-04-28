@@ -1,13 +1,13 @@
+import { evaluateTree } from "context-free-grammar";
+import { preparePosTagParseTable } from "pos-tagging";
 import {
   NounPhraseParse,
   PredicateSyntaxParse,
   assertIsPredicateSyntaxParse,
   assertIsNounPhraseParse,
-} from "../grammar/parseTypings";
-import { preparePosTagParseTable } from "../wordnet";
-import { NounPhraseGrammar } from "../grammar/NounPhraseGrammar";
-import { PredicateSyntaxGrammar } from "../grammar/PredicateSyntaxGrammar";
-import { evaluateTree } from "../grammar";
+  PredicateSyntaxGrammar,
+} from "preset-grammars";
+import { NounPhraseGrammar } from "preset-grammars";
 
 // NOTE: Keep updating this function with whatever is the best version
 export async function* parseNounPhrase(

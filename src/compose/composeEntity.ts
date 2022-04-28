@@ -1,10 +1,8 @@
 import { Entity, Predicate } from "../logic";
 import { Noun } from "../Noun";
 import { Adjective } from "../Adjective";
-import { PredicateSyntax } from "../PredicateSyntax";
-import { isTense } from "../util/tense";
-import { composeNounPhrase } from "./composeNounPhrase";
 import { isPredicateSyntaxWithTense } from "../linking/SyntaxLogicLinkingMatrix";
+import { composeNounPhrase } from "compose-english-phrases";
 
 export function collectEntitySyntaxs(
   e: Entity,
@@ -114,8 +112,8 @@ export function composeEntity(
       let args: string[] = [];
       args[sentence.nounPhraseFor] = nounPhrase;
       for (let i in sentence.args)
-        if (!args[i])
-          args[i] = composeEntity(sentence.args[i], ctx, {
+        if (!args[Number(i)])
+          args[Number(i)] = composeEntity(sentence.args[i], ctx, {
             numberOfEmbeddedSentences: 0,
           });
 

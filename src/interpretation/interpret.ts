@@ -1,15 +1,14 @@
 import {
   NounPhraseParse,
-  PronounParse,
   SimpleNounPhraseParse,
   PredicateSyntaxParse,
-} from "../grammar/parseTypings";
+} from "preset-grammars";
 import { VariableTable, Entity, createVariable } from "../logic";
 import {
   createNounPredicate,
   createAdjectivePredicate,
   createPredicateSyntaxPredicate,
-} from "../linking/linking";
+} from "predicate-syntax";
 
 export function interpretSimplePresent(
   sentence: PredicateSyntaxParse

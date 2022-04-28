@@ -1,7 +1,7 @@
 import { Noun } from "./Noun";
 import { Adjective } from "./Adjective";
-import { PredicateSyntax } from "./PredicateSyntax";
-import { Template } from "./Template";
+import Template from "english-template";
+import PredicateSyntax from "predicate-syntax";
 type StatementSyntax = Template | PredicateSyntax;
 
 export class Dictionary {
