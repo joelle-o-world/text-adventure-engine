@@ -25,6 +25,7 @@ import { sentenceFormSymbol } from "english-transformations";
 import { shiftWord } from "string-utils";
 import { createPredicateSyntaxPredicate } from "./linking";
 import { VerbFormNumber } from "english-morphology/src/verb-forms";
+import { toAnnotationLogic } from "./toAnnotationLogic";
 const { anyPersonRegex, anyConjugationRegex, conjugate } =
   alternativeConjugation;
 
@@ -431,6 +432,8 @@ export default class PredicateSyntax {
       params: this.params.map((p) => p.name),
     });
   }
+
+  public toAnnotationLogic = toAnnotationLogic;
 }
 
 function composeQuickCheckRegex(infinitive: string) {

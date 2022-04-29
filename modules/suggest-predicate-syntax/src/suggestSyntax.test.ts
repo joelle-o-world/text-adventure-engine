@@ -1,4 +1,4 @@
-import suggestSyntax, { wordnetParse } from "./suggestSyntax";
+import { suggestSyntax, wordnetParse } from "./suggestSyntax";
 import PredicateSyntax from "predicate-syntax";
 import { allTenses } from "english-transformations";
 import deepEqual from "deep-equal";
