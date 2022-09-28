@@ -5,7 +5,7 @@ import { preparePosTagParseTable } from "pos-tagging";
 /**
  * Use wordnet part-of-speech tagging and a context free grammar (CFG) to suggest possible PredicateSyntax objects for unseen sentences.
  */
-export default async function* suggestSyntax(
+export async function* suggestSyntax(
   str: string
 ): AsyncGenerator<{ verb: string; params: string[] }> {
   const forest = await wordnetParse(str);
